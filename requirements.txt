@@ -1,0 +1,15 @@
+﻿# Selenium e WebDriver
+selenium==4.17.0
+webdriver-manager==4.0.1
+
+# Pytest e plugins
+pytest==7.4.3
+pytest-html==4.1.1
+pytest-xdist==3.5.0
+pytest-rerunfailures==13.0
+
+# Relatórios
+allure-pytest==2.13.2
+
+# Utilitários
+python-dotenv==1.0.0
