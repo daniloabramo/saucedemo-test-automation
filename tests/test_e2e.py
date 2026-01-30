@@ -3,7 +3,6 @@ from pages.products_page import ProductsPage
 from pages.checkout_page import CheckoutPage
 import allure
 
-
 @allure.epic("Testes E2E")
 @allure.feature("Fluxo Completo de Compra")
 @allure.story("Jornada de Usuário - Login até Finalização do Pedido")
@@ -55,11 +54,11 @@ class TestE2E:
             products_page = ProductsPage(driver)
             products_page.add_product(0)
             products_page.add_product(2)
+            driver.execute_script("window.scrollTo(0, 0);")
             driver.screenshot()
 
         with allure.step("Então o badge do carrinho deve exibir 2 itens"):
             assert products_page.get_cart_badge_count() == 2
-            driver.screenshot()
 
         with allure.step("Quando o usuário navega para o carrinho de compras"):
             checkout_page = CheckoutPage(driver)

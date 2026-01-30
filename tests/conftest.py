@@ -92,7 +92,7 @@ def cart_with_products(logged_driver):
     
     products_page = ProductsPage(logged_driver)
     products_page.add_product(0)
-    products_page.add_product(1)
+    products_page.add_product(2)
     
     return logged_driver
 

@@ -45,3 +45,5 @@ class TestLogin:
         )
         
         assert driver.current_url == "https://www.saucedemo.com/"
+
+
