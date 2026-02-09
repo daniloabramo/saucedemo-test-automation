@@ -1,0 +1,57 @@
+name: Run Selenium Tests with Allure
+
+on:
+  push:
+    branches: [ main ]  
+  schedule:
+    - cron: '0 9 * * *'  
+  workflow_dispatch:  
+
+permissions: write-all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install allure-pytest
+        
+    - name: Run Selenium tests
+      run: |
+        pytest --alluredir=allure-results
+      continue-on-error: true
+      
+    - name: Load test report history
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+        
+    - name: Build Allure Report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        gh_pages: gh-pages
+        allure_history: allure-history
+        allure_results: allure-results
+        
+    - name: Deploy Allure Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
