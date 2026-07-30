@@ -33,8 +33,14 @@ jobs:
           python-version: "3.x"
           cache: pip
 
-      - name: Install dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install allure-pytest
 
@@ -49,6 +55,7 @@ jobs:
           allure --version
 
       - name: Generate Allure report
+        if: always()
         run: |
           mkdir -p allure-results
           allure generate allure-results \
@@ -56,12 +63,14 @@ jobs:
             --output allure-report
 
       - name: Upload GitHub Pages artifact
+        if: always()
         uses: actions/upload-pages-artifact@v3
         with:
           path: allure-report
 
   deploy:
     needs: test
+    if: always()
     runs-on: ubuntu-latest
 
     environment:
