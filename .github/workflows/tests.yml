@@ -46,7 +46,7 @@ jobs:
       - name: Install Allure CLI
         run: |
           wget -qO allure.tgz \
-            https://github.com/allure-framework/allure2/releases/latest/download/allure-2.35.1.tgz
+            https://github.com/allure-framework/allure2/releases/download/2.35.1/allure-2.35.1.tgz
           sudo tar -zxf allure.tgz -C /opt/
           sudo ln -s /opt/allure-2.35.1/bin/allure /usr/local/bin/allure
 
@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload GitHub Pages artifact
         if: always()
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: allure-report
 
