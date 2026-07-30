@@ -45,26 +45,22 @@ jobs:
 
       - name: Install Allure CLI
         run: |
-          wget -qO allure.tgz \
-            https://github.com/allure-framework/allure2/releases/download/2.35.1/allure-2.35.1.tgz
-          sudo tar -zxf allure.tgz -C /opt/
-          sudo ln -s /opt/allure-2.35.1/bin/allure /usr/local/bin/allure
+          npm install --global allure-commandline
+          allure --version
 
       - name: Generate Allure report
-        if: always()
         run: |
+          mkdir -p allure-results
           allure generate allure-results \
             --clean \
             --output allure-report
 
       - name: Upload GitHub Pages artifact
-        if: always()
         uses: actions/upload-pages-artifact@v3
         with:
           path: allure-report
 
   deploy:
-    if: always()
     needs: test
     runs-on: ubuntu-latest
 
